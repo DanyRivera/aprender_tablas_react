@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import Learn from './components/Learn';
 import Home from './components/Home';
+import Learn from './components/Learn';
+import Resultados from './components/Resultados';
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/learn/:tabla" element={<Learn />}/>
+        <Route path="/resultados" element={<Resultados />}/>
       </Routes>
 
     </Router>

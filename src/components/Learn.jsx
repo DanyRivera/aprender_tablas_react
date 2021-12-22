@@ -6,16 +6,23 @@ const Learn = () => {
 
     const { tabla } = useParams();
 
-    const [numerosRandom, setNumerosRandom] = useState([]);
     const [numeroRandom, setNumeroRandom] = useState(random(1, 10));
     const [numeroAmultiplicar, setNumeroAmultiplicar] = useState(numeroRandom);
+    const [numerosRandom, setNumerosRandom] = useState([]);
     const [resultado, setResultado] = useState(0);
     const [numeroSeleccionado, setNumeroSeleccionado] = useState(0);
     const [resultadoCorrecto, setResultadoCorrecto] = useState(false);
+    const [gameOver, setGameOver] = useState(false);
 
     useEffect(() => {
 
-        if (numerosRandom.length > 0) {
+        if (numerosRandom.length === 9) {
+
+            // history.push('/resultados');
+ 
+            setGameOver(true);
+
+        } else {
 
             //Si se repite lo agregas si NO buscar otro número
             if (!numerosRandom.includes(numeroRandom)) {
@@ -33,14 +40,9 @@ const Learn = () => {
                         setNumerosRandom([...numerosRandom, numeroRandom]);
                     }
                 }
-
-
             }
 
-        } else {
-            setNumerosRandom([...numerosRandom, numeroRandom]);
         }
-
 
     }, [numeroRandom])
 
@@ -66,7 +68,7 @@ const Learn = () => {
     return (
         <div className="bg-secondary pt-16 md:pt-20 overflow-y-scroll overflow-x-hidden h-screen">
             <h1
-                className='text-white text-center pt-20 text-6xl'
+                className='text-white text-center text-6xl'
             >Vamos!</h1>
 
             <div className="text-center mt-36 text-8xl text-white font-bold">
