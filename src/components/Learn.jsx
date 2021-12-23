@@ -1,26 +1,25 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { random } from "../helpers";
 
 const Learn = () => {
 
     const { tabla } = useParams();
+    const navigate = useNavigate();
 
     const [numeroRandom, setNumeroRandom] = useState(random(1, 10));
     const [numeroAmultiplicar, setNumeroAmultiplicar] = useState(numeroRandom);
     const [numerosRandom, setNumerosRandom] = useState([]);
     const [resultado, setResultado] = useState(0);
     const [numeroSeleccionado, setNumeroSeleccionado] = useState(0);
-    const [resultadoCorrecto, setResultadoCorrecto] = useState(false);
-    const [gameOver, setGameOver] = useState(false);
+    const [resultadoCorrecto, setResultadoCorrecto] = useState(null);
 
     useEffect(() => {
 
-        if (numerosRandom.length === 9) {
+        if (numerosRandom.length === 10) {
 
-            // history.push('/resultados');
- 
-            setGameOver(true);
+            //Redireccionar
+            navigate('/resultados');
 
         } else {
 
@@ -33,6 +32,7 @@ const Learn = () => {
 
             } else {
 
+                //Buscar otro numero
                 for (let i = 0; i <= numerosRandom.length; i++) {
                     setNumeroRandom(random(1, 10));
 
@@ -62,6 +62,11 @@ const Learn = () => {
             setResultadoCorrecto(false);
         }
 
+        setTimeout(() => {
+            setNumeroRandom(random(1, 10));
+            setResultadoCorrecto(null);
+        }, 1000);
+
     }, [resultado, numeroSeleccionado])
 
 
@@ -78,11 +83,10 @@ const Learn = () => {
             <ul className="text-center md:flex justify-between mx-auto mt-20 md:mt-28  w-1/3">
                 <li>
                     <button
-                        className="px-10 mt-10 py-3 border-none outline-none bg-primary text-black text-2xl rounded-md tracking-widest transition-all duration-150 hover:cursor-pointer hover:bg-yellow-500 hover:font-bold"
+                        className={`px-10 mt-10 py-3 border-none outline-none bg-primary text-black text-2xl rounded-md tracking-widest transition-all ease-out duration-300 hover:cursor-pointer hover:bg-yellow-500  ${resultadoCorrecto && 'focus:bg-good focus:text-white focus:scale-125 focus:font-bold'} ${resultadoCorrecto == false && 'focus:bg-wrong focus:text-white focus:scale-125 focus:font-bold'}`}
 
                         onClick={e => {
                             setNumeroSeleccionado(Number(e.target.value));
-                            setNumeroRandom(random(1, 10));
                         }}
 
                         value={resultado}
@@ -93,11 +97,10 @@ const Learn = () => {
 
                 <li>
                     <button
-                        className="px-10 mt-10 py-3 border-none outline-none bg-primary text-black text-2xl rounded-md tracking-widest transition-all duration-150 hover:cursor-pointer hover:bg-yellow-500 hover:font-bold"
+                        className={`px-10 mt-10 py-3 border-none outline-none bg-primary text-black text-2xl rounded-md tracking-widest transition-all ease-out duration-300 hover:cursor-pointer hover:bg-yellow-500  ${resultadoCorrecto && 'focus:bg-good focus:text-white focus:scale-125 focus:font-bold'} ${resultadoCorrecto == false && 'focus:bg-wrong focus:text-white focus:scale-125 focus:font-bold'}`}
 
                         onClick={e => {
                             setNumeroSeleccionado(Number(e.target.value));
-                            setNumeroRandom(random(1, 10));
                         }}
 
                         value={resultado + 3}
@@ -108,11 +111,10 @@ const Learn = () => {
 
                 <li>
                     <button
-                        className="px-10 mt-10 py-3 border-none outline-none bg-primary text-black text-2xl rounded-md tracking-widest transition-all duration-150 hover:cursor-pointer hover:bg-yellow-500 hover:font-bold"
+                        className={`px-10 mt-10 py-3 border-none outline-none bg-primary text-black text-2xl rounded-md tracking-widest transition-all ease-out duration-300 hover:cursor-pointer hover:bg-yellow-500  ${resultadoCorrecto && 'focus:bg-good focus:text-white focus:scale-125 focus:font-bold'} ${resultadoCorrecto == false && 'focus:bg-wrong focus:text-white focus:scale-125 focus:font-bold'}`}
 
                         onClick={e => {
                             setNumeroSeleccionado(Number(e.target.value));
-                            setNumeroRandom(random(1, 10));
                         }}
 
                         value={resultado - 3}
