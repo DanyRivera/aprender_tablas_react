@@ -1,9 +1,12 @@
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { useState } from 'react/cjs/react.development';
 import Home from './components/Home';
 import Learn from './components/Learn';
-import Resultados from './components/Resultados';
+import Results from './components/Results';
 
 function App() {
+
+  const [puntos, setPuntos] = useState([]);
 
   return (
 
@@ -11,8 +14,8 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />}/>
-        <Route path="/learn/:tabla" element={<Learn />}/>
-        <Route path="/resultados" element={<Resultados />}/>
+        <Route path="/learn/:tabla" element={<Learn setPuntos={setPuntos} puntos={puntos} />}/>
+        <Route path="/resultados" element={<Results setPuntos={setPuntos} puntos={puntos}/>}/>
         <Route path="*" element={<Home />}/>
       </Routes>
 

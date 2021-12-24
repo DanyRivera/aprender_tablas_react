@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { random } from "../helpers";
+import Options from "./Options";
 
-const Learn = () => {
+const Learn = ({ puntos, setPuntos }) => {
 
     const { tabla } = useParams();
     const navigate = useNavigate();
@@ -14,11 +15,20 @@ const Learn = () => {
     const [numeroSeleccionado, setNumeroSeleccionado] = useState(0);
     const [resultadoCorrecto, setResultadoCorrecto] = useState(null);
 
+    //Options
+    const [varianteResultado, setVarianteResultado] = useState(random(1, 5));
+
     useEffect(() => {
 
+        //"Proteger" la ruta
+        if (tabla > 10 || isNaN(tabla)) {
+            navigate('/');
+            return;
+        }
+
+        //Redireccionar una vez terminado
         if (numerosRandom.length === 10) {
 
-            //Redireccionar
             navigate('/resultados');
 
         } else {
@@ -32,17 +42,24 @@ const Learn = () => {
 
             } else {
 
-                //Buscar otro numero
-                for (let i = 0; i <= numerosRandom.length; i++) {
-                    setNumeroRandom(random(1, 10));
+                setNumeroRandom(random(1, 10));
 
-                    if (!numerosRandom.includes(numeroRandom)) {
-                        setNumerosRandom([...numerosRandom, numeroRandom]);
-                    }
-                }
+                // const busqueda = setInterval(() => {
+
+                //     setNumeroRandom(random(1, 10));
+
+                // }, 2000);
+
+                // if (busqueda > 1000) {
+                //     clearInterval(busqueda);
+                // }
+
+                // console.log(busqueda);
+
             }
 
         }
+
 
     }, [numeroRandom])
 
@@ -50,6 +67,7 @@ const Learn = () => {
 
         //Una vez que carga
         if (resultado === 0 || numeroSeleccionado === 0) {
+
             //Saber el resultado
             setResultado(tabla * numeroAmultiplicar);
             return;
@@ -58,14 +76,23 @@ const Learn = () => {
         //Verificar el resultado y poner si esta bien o no en el state
         if (resultado === numeroSeleccionado) {
             setResultadoCorrecto(true);
+
+            if (puntos.length < numerosRandom.length) {
+                setPuntos([...puntos, 1]);
+            }
+
         } else {
             setResultadoCorrecto(false);
         }
 
+        setNumeroSeleccionado(0);
+
         setTimeout(() => {
+            setVarianteResultado(random(1, 5));
             setNumeroRandom(random(1, 10));
             setResultadoCorrecto(null);
-        }, 1000);
+        }, 750);
+
 
     }, [resultado, numeroSeleccionado])
 
@@ -81,47 +108,13 @@ const Learn = () => {
             </div>
 
             <ul className="text-center md:flex justify-between mx-auto mt-20 md:mt-28  w-1/3">
-                <li>
-                    <button
-                        className={`px-10 mt-10 py-3 border-none outline-none bg-primary text-black text-2xl rounded-md tracking-widest transition-all ease-out duration-300 hover:cursor-pointer hover:bg-yellow-500  ${resultadoCorrecto && 'focus:bg-good focus:text-white focus:scale-125 focus:font-bold'} ${resultadoCorrecto == false && 'focus:bg-wrong focus:text-white focus:scale-125 focus:font-bold'}`}
 
-                        onClick={e => {
-                            setNumeroSeleccionado(Number(e.target.value));
-                        }}
-
-                        value={resultado}
-                    >
-                        {resultado}
-                    </button>
-                </li>
-
-                <li>
-                    <button
-                        className={`px-10 mt-10 py-3 border-none outline-none bg-primary text-black text-2xl rounded-md tracking-widest transition-all ease-out duration-300 hover:cursor-pointer hover:bg-yellow-500  ${resultadoCorrecto && 'focus:bg-good focus:text-white focus:scale-125 focus:font-bold'} ${resultadoCorrecto == false && 'focus:bg-wrong focus:text-white focus:scale-125 focus:font-bold'}`}
-
-                        onClick={e => {
-                            setNumeroSeleccionado(Number(e.target.value));
-                        }}
-
-                        value={resultado + 3}
-                    >
-                        {resultado + 3}
-                    </button>
-                </li>
-
-                <li>
-                    <button
-                        className={`px-10 mt-10 py-3 border-none outline-none bg-primary text-black text-2xl rounded-md tracking-widest transition-all ease-out duration-300 hover:cursor-pointer hover:bg-yellow-500  ${resultadoCorrecto && 'focus:bg-good focus:text-white focus:scale-125 focus:font-bold'} ${resultadoCorrecto == false && 'focus:bg-wrong focus:text-white focus:scale-125 focus:font-bold'}`}
-
-                        onClick={e => {
-                            setNumeroSeleccionado(Number(e.target.value));
-                        }}
-
-                        value={resultado - 3}
-                    >
-                        {resultado - 3}
-                    </button>
-                </li>
+                <Options
+                    resultado={resultado}
+                    resultadoCorrecto={resultadoCorrecto}
+                    varianteResultado={varianteResultado}
+                    setNumeroSeleccionado={setNumeroSeleccionado}
+                />
 
             </ul>
 

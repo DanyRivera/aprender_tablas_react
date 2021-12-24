@@ -17,6 +17,10 @@ export const formatearFecha = fecha => {
     return fechaNueva.toLocaleDateString('es-ES', opciones);
 }
 
-export const random = (min,max) => {
+export const random = (min, max) => {
     return Math.floor((Math.random() * (max - min + 1)) + min);
+}
+
+export const obtenerPorcentaje = (porcentajeAsacar, total, fixed) => {
+    return Number(((porcentajeAsacar * 100) / total).toFixed(fixed));
 }
