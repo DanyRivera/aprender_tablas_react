@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import { useState } from 'react/cjs/react.development';
+import { useState } from 'react';
 import Home from './components/Home';
 import Learn from './components/Learn';
 import Results from './components/Results';
