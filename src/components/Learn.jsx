@@ -11,6 +11,7 @@ const Learn = ({ puntos, setPuntos }) => {
     const [numeroRandom, setNumeroRandom] = useState(random(1, 10));
     const [numeroAmultiplicar, setNumeroAmultiplicar] = useState(numeroRandom);
     const [numerosRandom, setNumerosRandom] = useState([]);
+    const [numerosReferencia, setNumerosReferencia] = useState([]);
     const [resultado, setResultado] = useState(0);
     const [numeroSeleccionado, setNumeroSeleccionado] = useState(0);
     const [resultadoCorrecto, setResultadoCorrecto] = useState(null);
@@ -29,7 +30,7 @@ const Learn = ({ puntos, setPuntos }) => {
         //Redireccionar una vez terminado
         if (numerosRandom.length === 10) {
 
-            navigate('/resultados');
+            // navigate('/resultados');
 
         } else {
 
@@ -42,19 +43,13 @@ const Learn = ({ puntos, setPuntos }) => {
 
             } else {
 
-                setNumeroRandom(random(1, 10));
+                if (numerosRandom == numerosReferencia) {
+                    const busqueda = setInterval(() => {
 
-                // const busqueda = setInterval(() => {
+                        setNumeroRandom(random(1, 10));
 
-                //     setNumeroRandom(random(1, 10));
-
-                // }, 2000);
-
-                // if (busqueda > 1000) {
-                //     clearInterval(busqueda);
-                // }
-
-                // console.log(busqueda);
+                    }, 5000);
+                }
 
             }
 
@@ -103,17 +98,19 @@ const Learn = ({ puntos, setPuntos }) => {
                 className='text-white text-center text-6xl'
             >Vamos!</h1>
 
-            <div className="text-center mt-36 text-8xl text-white font-bold">
+            <div className="text-center mt-20 md:mt-36 text-8xl text-white font-bold">
                 <p>{tabla} x {numeroAmultiplicar}</p>
             </div>
 
-            <ul className="text-center md:flex justify-between mx-auto mt-20 md:mt-28  w-1/3">
+            <ul className="text-center md:flex justify-between mx-auto mt-20 md:mt-28 w-1/3">
 
                 <Options
                     resultado={resultado}
                     resultadoCorrecto={resultadoCorrecto}
                     varianteResultado={varianteResultado}
+                    numerosRandom={numerosRandom}
                     setNumeroSeleccionado={setNumeroSeleccionado}
+                    setNumerosReferencia={setNumerosReferencia}
                 />
 
             </ul>
