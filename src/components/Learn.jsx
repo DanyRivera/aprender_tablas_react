@@ -7,6 +7,7 @@ const Learn = ({ puntos, setPuntos }) => {
 
     const { tabla } = useParams();
     const navigate = useNavigate();
+    let busqueda;
 
     const [numeroRandom, setNumeroRandom] = useState(random(1, 10));
     const [numeroAmultiplicar, setNumeroAmultiplicar] = useState(numeroRandom);
@@ -34,28 +35,23 @@ const Learn = ({ puntos, setPuntos }) => {
 
         } else {
 
+            busqueda = setInterval(() => {
+
+                setNumeroRandom(random(1, 10));
+
+            }, 3000);
+
             //Si se repite lo agregas si NO buscar otro número
             if (!numerosRandom.includes(numeroRandom)) {
+
                 setNumerosRandom([...numerosRandom, numeroRandom]);
                 setNumeroAmultiplicar(numeroRandom);
                 setResultado(0);
                 setNumeroSeleccionado(0);
+                clearInterval(busqueda);
 
-            } else {
-
-                if (numerosRandom == numerosReferencia) {
-                    const busqueda = setInterval(() => {
-
-                        setNumeroRandom(random(1, 10));
-
-                    }, 5000);
-                }
-
-            }
-
+            } 
         }
-
-
     }, [numeroRandom])
 
     useEffect(() => {
