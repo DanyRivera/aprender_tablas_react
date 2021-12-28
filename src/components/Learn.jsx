@@ -16,6 +16,7 @@ const Learn = ({ puntos, setPuntos }) => {
     const [resultado, setResultado] = useState(0);
     const [numeroSeleccionado, setNumeroSeleccionado] = useState(0);
     const [resultadoCorrecto, setResultadoCorrecto] = useState(null);
+    const [buscarOtro, setBuscarOtro] = useState(false);
 
     //Options
     const [varianteResultado, setVarianteResultado] = useState(random(1, 5));
@@ -31,26 +32,21 @@ const Learn = ({ puntos, setPuntos }) => {
         //Redireccionar una vez terminado
         if (numerosRandom.length === 10) {
 
-            // navigate('/resultados');
+            navigate('/resultados');
 
         } else {
 
-            busqueda = setInterval(() => {
-
-                setNumeroRandom(random(1, 10));
-
-            }, 3000);
-
-            //Si se repite lo agregas si NO buscar otro número
+            //Verificar por si se repite y buscar otro número
             if (!numerosRandom.includes(numeroRandom)) {
-
                 setNumerosRandom([...numerosRandom, numeroRandom]);
                 setNumeroAmultiplicar(numeroRandom);
                 setResultado(0);
                 setNumeroSeleccionado(0);
-                clearInterval(busqueda);
+            } else {
+                setNumeroRandom(random(1,10));
+            }
 
-            } 
+
         }
     }, [numeroRandom])
 
@@ -80,7 +76,7 @@ const Learn = ({ puntos, setPuntos }) => {
 
         setTimeout(() => {
             setVarianteResultado(random(1, 5));
-            setNumeroRandom(random(1, 10));
+            setNumeroRandom(random(1, 5));
             setResultadoCorrecto(null);
         }, 750);
 
@@ -104,9 +100,8 @@ const Learn = ({ puntos, setPuntos }) => {
                     resultado={resultado}
                     resultadoCorrecto={resultadoCorrecto}
                     varianteResultado={varianteResultado}
-                    numerosRandom={numerosRandom}
                     setNumeroSeleccionado={setNumeroSeleccionado}
-                    setNumerosReferencia={setNumerosReferencia}
+                    setBuscarOtro={setBuscarOtro}
                 />
 
             </ul>

@@ -4,8 +4,6 @@ const Options = ({
     varianteResultado,
     resultadoCorrecto,
     setNumeroSeleccionado,
-    numerosRandom,
-    setNumerosReferencia
 }) => {
 
     return (
@@ -16,7 +14,6 @@ const Options = ({
 
                     onClick={e => {
                         setNumeroSeleccionado(Number(e.target.value));
-                        // setNumerosReferencia(numerosRandom);
                     }}
 
                     value={varianteResultado < 3 ? resultado : resultado + varianteResultado}
@@ -30,7 +27,6 @@ const Options = ({
 
                     onClick={e => {
                         setNumeroSeleccionado(Number(e.target.value));
-                        // setNumerosReferencia(numerosRandom);
                     }}
 
                     value={varianteResultado == 3 ? resultado : resultado - varianteResultado + 3}
@@ -44,7 +40,6 @@ const Options = ({
 
                     onClick={e => {
                         setNumeroSeleccionado(Number(e.target.value));
-                        // setNumerosReferencia(numerosRandom);
                     }}
 
                     value={varianteResultado > 3 ? resultado : resultado - varianteResultado}
